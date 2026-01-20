@@ -11,6 +11,7 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <repositories>
@@ -21,6 +22,10 @@
         <repository>
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 
@@ -68,10 +73,9 @@
         </dependency>
 
         <dependency>
-            <groupId>me.leoo.utils</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>2.1.11</version>
-        </dependency>
+            <groupId>com.github.leo18bernese</groupId>
+            <artifactId>Utils</artifactId>
+            <version>2.1.11</version> </dependency>
 
         <dependency>
             <groupId>org.bstats</groupId>
@@ -114,7 +118,7 @@
                         </relocation>
                         <relocation>
                             <pattern>me.leoo.utils</pattern>
-                            <shadedPattern>me.leoo.bedwars.mapselector.libs.utils</shadedPattern>ù
+                            <shadedPattern>me.leoo.bedwars.mapselector.libs.utils</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.bstats</pattern>
