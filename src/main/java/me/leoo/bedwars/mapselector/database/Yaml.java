@@ -18,8 +18,10 @@ import java.util.List;
 public class Yaml {
 
     public void storePlayer(Player player) {
-        MapSelector.get().getCacheConfig().set(player.getUniqueId() + ".favorite-maps", Collections.emptyList());
-        MapSelector.get().getCacheConfig().set(player.getUniqueId() + ".per-map-times-joined", Collections.emptyList());
+        // OPTIMIZATION: Use getYml().set() to update memory only.
+        // The file is now saved periodically by the main class instead of every single time.
+        MapSelector.get().getCacheConfig().getYml().set(player.getUniqueId() + ".favorite-maps", Collections.emptyList());
+        MapSelector.get().getCacheConfig().getYml().set(player.getUniqueId() + ".per-map-times-joined", Collections.emptyList());
     }
 
     public boolean isStoredPlayer(Player player) {
@@ -39,12 +41,14 @@ public class Yaml {
 
     public void setFavorite(Player player, String map) {
         checkStored(player);
-        MapSelector.get().getCacheConfig().set(player.getUniqueId() + ".favorite-maps." + map, Boolean.TRUE);
+        // OPTIMIZATION: Memory-only update
+        MapSelector.get().getCacheConfig().getYml().set(player.getUniqueId() + ".favorite-maps." + map, Boolean.TRUE);
     }
 
     public void unsetFavorite(Player player, String map) {
         checkStored(player);
-        MapSelector.get().getCacheConfig().set(player.getUniqueId() + ".favorite-maps." + map, Boolean.FALSE);
+        // OPTIMIZATION: Memory-only update
+        MapSelector.get().getCacheConfig().getYml().set(player.getUniqueId() + ".favorite-maps." + map, Boolean.FALSE);
     }
 
     public List<IArena> getFavorites(Player player, String group) {
@@ -71,7 +75,8 @@ public class Yaml {
 
     public void addMapJoin(Player player, String map) {
         checkStored(player);
-        MapSelector.get().getCacheConfig().set(player.getUniqueId() + ".per-map-times-joined." + map, MapSelector.get().getCacheConfig().getInt(player.getUniqueId() + ".per-map-times-joined." + map) + 1);
+        // OPTIMIZATION: Memory-only update
+        MapSelector.get().getCacheConfig().getYml().set(player.getUniqueId() + ".per-map-times-joined." + map, MapSelector.get().getCacheConfig().getInt(player.getUniqueId() + ".per-map-times-joined." + map) + 1);
     }
 
     public int getMapJoins(Player player, String map) {
