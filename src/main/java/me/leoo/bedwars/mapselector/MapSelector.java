@@ -63,6 +63,12 @@ public class MapSelector extends JavaPlugin {
         // Metrics
         new Metrics(this, 23388);
 
+        // OPTIMIZATION: Auto-save cache every 10 minutes asynchronously
+        getServer().getScheduler().runTaskTimerAsynchronously(this, () -> {
+            if (cacheConfig != null) {
+                cacheConfig.save();
+            }
+        }, 12000L, 12000L);
 
         getLogger().info(getDescription().getName() + " plugin by itz_leoo has been successfully enabled.");
     }
@@ -70,6 +76,9 @@ public class MapSelector extends JavaPlugin {
     @Override
     public void onDisable() {
         if (databaseManager != null) databaseManager.close();
+        
+        // OPTIMIZATION: Save cache on disable to persist data
+        if (cacheConfig != null) cacheConfig.save();
 
         getLogger().info(getDescription().getName() + " plugin by itz_leoo has been successfully disabled.");
     }
